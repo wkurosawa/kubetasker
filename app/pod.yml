@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tasker
+spec:
+  containers:
+    - name: container-application
+      image: wkurosawa/tasker:v0.8
+      ports:
+        - containerPort: 8080
+      env:
+        - name: SPRING_DATASOURCE_URL
+          value: "jdbc:mysql://mysql:3306/tasker_database?autoReconnect=true&useSSL=false"

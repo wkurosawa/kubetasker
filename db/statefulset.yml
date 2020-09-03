@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: stateful-mysql
+spec:
+  serviceName: mysql
+  selector:
+    matchLabels:
+      name: mysql
+  template:
+    metadata:
+      labels:
+        name: mysql
+    spec:
+      containers:
+        - name: container-mysql
+          image: mysql/mysql-server:5.7
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "1234"
+            - name: MYSQL_DATABASE
+              value: "tasker_database"
+            - name: MYSQL_USER
+              value: "app_user"
+            - name: MYSQL_PASSWORD
+              value: "1234"
+          volumeMounts:
+            - name: volume-mysql
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: volume-mysql
+          persistentVolumeClaim:
+            claimName: configuration-mysql

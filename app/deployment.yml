@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: application-deployment
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: application-pod
+  template:
+    metadata:
+      labels:
+        app: application-pod
+    spec:
+      containers:
+        - name: container-application
+          image: wkurosawa/tasker:v0.8
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:mysql://mysql:3306/tasker_database?autoReconnect=true&useSSL=false"
